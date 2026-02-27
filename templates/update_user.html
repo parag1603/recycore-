@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update User CC Hours</title>
+  <style>
+    body {
+      background-color: #0f2027;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h2 {
+      color: #00ffff;
+    }
+
+    form {
+      background-color: #1e3c46;
+      display: inline-block;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      color: #00ffff;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      margin-bottom: 15px;
+      background-color: #243b40;
+      color: #fff;
+    }
+
+    .save-btn {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .save-btn:hover {
+      background-color: #019875;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Update CC Hours for {{ user.name }}</h2>
+
+  <form action="/update-user/{{ user.id }}" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" value="{{ user.name }}" disabled>
+
+    <label for="email">Email:</label>
+    <input type="text" value="{{ user.email }}" disabled>
+
+    <label for="cc_hours">CC Hours:</label>
+    <input type="number" id="cc_hours" name="cc_hours" value="{{ user.cc_hours }}" required>
+
+    <button type="submit" class="save-btn">Save Changes</button>
+  </form>
+
+  <br>
+
+  <a href="{{ url_for('view_users') }}">← Back to Registered Users</a>
+</body>
+</html>

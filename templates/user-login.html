@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Login | Recycore</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 45px 40px;
+      width: 370px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #00ffe1;
+      margin-bottom: 20px;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    /* 🔹 Form styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #003333;
+      font-size: 15px;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 12px #00ffe1;
+    }
+
+    /* 🔹 Login button */
+    input[type="submit"] {
+      width: 100%;
+      background: linear-gradient(90deg, #00ffe1, #00bcd4);
+      color: #003333;
+      font-weight: bold;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      box-shadow: 0 0 20px #00ffff;
+      transform: scale(1.03);
+    }
+
+    /* 🔹 Forgot password + back link */
+    .links {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    a {
+      color: #00ffe1;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 🔹 Error message */
+    .error {
+      color: #ff6666;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div class="container">
+    <h2>🔐 User Login</h2>
+
+    <!--  Flask route for login -->
+    <form action="{{ url_for('user_login') }}" method="POST">
+      <input type="email" name="email" placeholder="Enter Email" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+      <input type="submit" value="Login">
+
+      <!-- 🔹 Forgot Password & Back Links -->
+      <div class="links">
+        <a href="{{ url_for('user_entry') }}">← Back</a>
+        <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+
+      </div>
+
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+</body>
+</html>

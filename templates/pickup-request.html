@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit E-Waste | Recycore</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 40px 50px;
+      width: 520px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+    }
+
+    h2 { text-align: center; color: #00ffe1; margin-bottom: 25px; }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border: 1px solid #00ffe1;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .item-row label { flex: 1; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+    .item-row input[type="number"] { width: 60px; }
+
+    .item-row input[type="text"] { width: 120px; margin-left: 8px; border-radius: 5px; padding: 2px 4px; }
+
+    button {
+      width: 100%;
+      background: linear-gradient(90deg, #00ffe1, #00bcd4);
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #003333;
+      transition: 0.3s;
+    }
+
+    button:hover { transform: scale(1.03); }
+
+    a { display: block; text-align: center; margin-top: 20px; color: #00ffe1; text-decoration: none; }
+
+    .message { text-align: center; margin-bottom: 15px; }
+    .success { color: #00e676; }
+    .danger { color: #ff5252; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>♻️ Submit E-Waste</h2>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('pickup_request') }}" method="post">
+    <input type="hidden" name="userid" value="{{ session['user_id'] }}">
+
+    <h3>Select E-Waste Categories:</h3>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Computers & Laptops"> Computers & Laptops</label>
+      <input type="number" name="quantity_Computers & Laptops" min="1" placeholder="Qty">
+    </div>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Mobile Phones & Tablets"> Mobile Phones & Tablets</label>
+      <input type="number" name="quantity_Mobile Phones & Tablets" min="1" placeholder="Qty">
+    </div>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Home Appliances"> Home Appliances</label>
+      <input type="number" name="quantity_Home Appliances" min="1" placeholder="Qty">
+    </div>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Office Electronics"> Office Electronics</label>
+      <input type="number" name="quantity_Office Electronics" min="1" placeholder="Qty">
+    </div>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Cables & Accessories"> Cables & Accessories</label>
+      <input type="number" name="quantity_Cables & Accessories" min="1" placeholder="Qty">
+    </div>
+
+    <div class="item-row">
+      <label><input type="checkbox" name="item_type[]" value="Printers & Scanners"> Printers & Scanners</label>
+      <input type="number" name="quantity_Printers & Scanners" min="1" placeholder="Qty">
+    </div>
+
+    <!-- Other option -->
+    <div class="item-row">
+      <label>
+        <input type="checkbox" name="item_type[]" value="Other"> Other
+        Name: <input type="text" name="other_item_name" placeholder="Enter item name">
+      </label>
+      <input type="number" name="quantity_Other" min="1" placeholder="Qty">
+    </div>
+
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <a href="{{ url_for('user_dashboard') }}">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

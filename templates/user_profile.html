@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 40px 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 30px 40px;
+      width: 800px;
+      max-width: 95%;
+      text-align: left;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffe1;
+      margin-bottom: 20px;
+      font-size: 28px;
+      text-shadow: 0 0 8px #00ffe1;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 25px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .info-box p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .info-box span {
+      font-weight: 600;
+      color: #00ffe1;
+    }
+
+    .ewaste-section { margin-top: 25px; text-align: center; }
+
+    .ewaste-section h2 {
+      color: #00ffe1;
+      font-size: 22px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px #00ffe1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      color: white;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    th {
+      background: #00bcd4;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #00ffe1, #00bcd4);
+      color: #003333;
+      font-weight: bold;
+      padding: 12px 25px;
+      margin-top: 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(0,255,255,0.7);
+      color: #001a1a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>My Profile</h1>
+
+  <div class="info-box">
+    <p><span>Name:</span> {{ username }}</p>
+    <p><span>Email:</span> {{ email }}</p>
+    <p><span>Address:</span> {{ address }}</p>
+    <p><span>CC Hours:</span> {{ cc_hours }} hrs</p>
+  </div>
+
+  <div class="ewaste-section">
+    <h2>E-Waste Submissions</h2>
+    {% if ewaste_list %}
+      <table>
+  <thead>
+    <tr>
+      <th>Items Submitted</th>
+      <th>Total Quantity</th>
+      <th>Submission Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for submission in ewaste_list %}
+    <tr>
+      <td>{{ submission.item_names }}</td>
+      <td>{{ submission.total_quantity }}</td>
+      <td>{{ submission.submission_date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    {% else %}
+      <p style="margin-top:15px;">No e-waste submitted yet.</p>
+    {% endif %}
+  </div>
+
+  <div style="text-align: center; margin-top: 25px;">
+    <a href="{{ url_for('user_dashboard') }}" class="btn">← Back to Dashboard</a>
+  </div>
+</div>
+
+</body>
+</html>

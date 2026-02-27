@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pickup Requests | Recycore</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #0b132b;
+      color: #fff;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00c6ff;
+      margin-bottom: 25px;
+    }
+
+    .filter-bar {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    select, button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      margin-left: 8px;
+      font-size: 15px;
+    }
+
+    select {
+      background-color: #1c2541;
+      color: #fff;
+    }
+
+    button {
+      background-color: #00c6ff;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0072ff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1c2541;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #3a506b;
+    }
+
+    th {
+      background-color: #3a506b;
+      color: #00c6ff;
+    }
+
+    tr:hover {
+      background-color: #3a506b;
+    }
+
+    .status {
+      font-weight: bold;
+      border-radius: 4px;
+      padding: 5px 8px;
+    }
+
+    .Approved {
+      color: #4CAF50;
+    }
+
+    .Disapproved {
+      color: #f44336;
+    }
+
+    .Pending {
+      color: #ffeb3b;
+    }
+
+    .action button {
+      margin: 0 4px;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .approve {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .disapprove {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #00c6ff;
+      font-weight: bold;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      width: 90px;
+      height: 90px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <h2>Pickup Requests</h2>
+
+  <div class="filter-bar">
+    <form method="get" action="{{ url_for('pickup_status') }}">
+      <label for="status">Filter by Status:</label>
+      <select name="status" id="status">
+        <option value="All" {% if selected_status == 'All' %}selected{% endif %}>All</option>
+        <option value="Pending" {% if selected_status == 'Pending' %}selected{% endif %}>Pending</option>
+        <option value="Approved" {% if selected_status == 'Approved' %}selected{% endif %}>Approved</option>
+        <option value="Disapproved" {% if selected_status == 'Disapproved' %}selected{% endif %}>Disapproved</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Request ID</th>
+        <th>Item Name</th>
+        <th>Item Type</th>
+        <th>Quantity</th>
+        <th>Pickup Date</th>
+        <th>Item Image</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in pickups %}
+      <tr>
+        <td>{{ p.request_id }}</td>
+        <td>{{ p.itemName }}</td>
+        <td>{{ p.itemtype }}</td>
+        <td>{{ p.quantity }}</td>
+        <td>{{ p.pickupDate }}</td>
+
+        <!-- ✅ Display Image -->
+        <td>
+  {% if p.item_image %}
+    <a href="{{ url_for('static', filename='uploads/' ~ p.item_image) }}" target="_blank">
+      <img src="{{ url_for('static', filename='uploads/' ~ p.item_image) }}" alt="Item Image" width="90" height="90" style="border-radius:8px; object-fit:cover;">
+    </a>
+  {% else %}
+    No Image
+  {% endif %}
+</td>
+
+        <!-- ✅ Status Column -->
+        <td><span class="status {{ p.status }}">{{ p.status }}</span></td>
+
+        <!-- ✅ Action Buttons -->
+        <td class="action">
+          <form method="post" action="{{ url_for('update_status', request_id=p.request_id) }}" style="display:inline;">
+            <input type="hidden" name="status" value="Approved">
+            <button class="approve">✓ Approve</button>
+          </form>
+          <form method="post" action="{{ url_for('update_status', request_id=p.request_id) }}" style="display:inline;">
+            <input type="hidden" name="status" value="Disapproved">
+            <button class="disapprove">✗ Disapprove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="text-align:center;">
+    <a href="{{ url_for('recycler_dashboard') }}" class="back">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

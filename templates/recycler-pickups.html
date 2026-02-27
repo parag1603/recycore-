@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recycler - E-Waste Summary</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #0b132b;
+      color: #fff;
+      padding: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00c6ff;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 60%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #1c2541;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #3a506b;
+    }
+
+    th {
+      background-color: #3a506b;
+      color: #00c6ff;
+      font-size: 16px;
+    }
+
+    tr:hover {
+      background-color: #3a506b;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      text-decoration: none;
+      color: #00c6ff;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>♻ Recycler - E-Waste Summary</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Total Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for item in total_items %}
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td>{{ item.total_quantity }}</td>
+        </tr>
+    {% else %}
+<tr><td colspan="2">No e-waste items found.</td></tr>
+{% endfor %}
+
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('recycler_dashboard') }}" class="back">← Back to Dashboard</a>
+</body>
+</html>

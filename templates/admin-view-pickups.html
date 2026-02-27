@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Pickup Requests</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body { background: linear-gradient(to right, #0f2027, #203a43, #2c5364); min-height: 100vh; color: white; padding: 30px 15px; }
+    h2 { text-align: center; color: #00ffe1; margin-bottom: 25px; font-size: 28px; }
+
+    .pickup-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 30px 25px;
+      width: 350px;
+      margin: 0 auto 40px auto;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .pickup-card h5 { margin-bottom: 20px; color: #00ffe1; }
+    .pickup-card input[type="date"] { width: 100%; padding: 10px; border: none; border-radius: 8px; background: rgba(255,255,255,0.8); color: #003333; font-size: 14px; outline: none; transition: box-shadow 0.3s ease; }
+    .pickup-card input[type="date"]:focus { box-shadow: 0 0 12px #00ffe1; }
+    .pickup-card button { width: 100%; padding: 10px; margin-top: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 15px; background: linear-gradient(90deg, #00ffe1, #00bcd4); color: #003333; cursor: pointer; transition: 0.3s ease; }
+    .pickup-card button:hover { box-shadow: 0 0 20px #00ffff; transform: scale(1.03); }
+
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; color: white; }
+    th, td { padding: 12px 15px; text-align: center; }
+    th { background: #00bcd4; color: white; }
+    tr:nth-child(even) { background-color: rgba(255,255,255,0.05); }
+    tr:hover { background-color: rgba(255,255,255,0.1); }
+
+    a.btn-back { display: inline-block; margin-top: 20px; background: #00ffe1; color: #003333; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+    a.btn-back:hover { background: #00bcd4; color: #fff; }
+    .btn-back-container { text-align: center; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <h2>📦 Admin: All Pickup Requests</h2>
+
+  <!-- ---------- Pickup Date Card ---------- -->
+  <div class="pickup-card">
+    <h5>Set Pickup Date for All Users</h5>
+    <form method="POST" action="{{ url_for('admin_view_pickups') }}">
+      <input type="date" name="pickup_date" value="{{ current_date.pickup_date if current_date else '' }}" required>
+      <button type="submit">Update Pickup Date</button>
+    </form>
+
+    {% if current_date %}
+      <div class="alert mt-3 text-center">
+        Current Pickup Date: <strong>{{ current_date.pickup_date }}</strong>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- ---------- Pickup Requests Table ---------- -->
+<div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>User Name</th>
+          <th>Items Submitted</th>
+          <th>Total Quantity</th>
+          <th>Submission Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pickup in pickups %}
+        <tr>
+          <td>{{ pickup.user_id }}</td>
+          <td>{{ pickup.user_name }}</td>
+          <td>{{ pickup.submitted_items }}</td>          <!-- ✅ string of item names -->
+          <td>{{ pickup.total_quantity }}</td>  <!-- ✅ total quantity -->
+          <td>{{ pickup.submission_date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+
+
+  <div class="btn-back-container">
+    <a href="{{ url_for('admin_panel') }}" class="btn-back">← Back to Dashboard</a>
+  </div>
+
+</body>
+</html>

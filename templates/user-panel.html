@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard | Recycore</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #1de9b6, #1dc4e9);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dashboard {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      color: #00695c;
+    }
+
+    .btn {
+      display: block;
+      background-color: #00897b;
+      color: white;
+      padding: 12px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #00695c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>Welcome, User 👋</h2>
+
+   <a href="{{ url_for('pickup_request') }}" class="btn">📦 Submit Pickup Request</a>
+<a href="{{ url_for('pickup_status') }}" class="btn">📄 View Request Status</a>
+<a href="{{ url_for('user_login') }}" class="btn" style="background-color:#d32f2f;">🚪 Logout</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | Recycore</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100%;
+      background: radial-gradient(circle at top left, #1a2a6c, #16222a, #0f2027);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 50px 20px;
+      color: white;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #00e6e6;
+      text-shadow: 1px 1px 6px rgba(0, 255, 255, 0.3);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #d4d4d4;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .grid {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 30px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      flex: 1 1 250px;
+      max-width: 250px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: 0.3s ease;
+      cursor: pointer;
+      color: white;
+      text-decoration: none;
+    }
+
+    .card:hover {
+      transform: scale(1.06);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #00ffe1;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
+      color: black;
+    }
+
+    .logout-btn {
+      background: linear-gradient(to right, #ff5f6d, #ffc371);
+      color: black;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Recycore Admin Dashboard</h1>
+  <p class="subtitle">Monitor, manage, and maintain your E-Waste system</p>
+
+  <div class="grid">
+    <div class="card" onclick="location.href='{{ url_for('view_recyclers') }}'">
+      <h3>👀 View Recyclers</h3>
+      <p>Check all registered recycler profiles</p>
+    </div>
+
+    <div class="card" onclick="location.href='{{ url_for('view_users') }}'">
+      <h3>👥 View Users</h3>
+      <p>Manage and track all registered users</p>
+    </div>
+
+    <div class="card" onclick="location.href='{{ url_for('admin_view_pickups') }}'">
+      <h3>♻️ View Pickups</h3>
+      <p>Check all pickup requests from users</p>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <!-- ✅ Back to index page -->
+   <a href="{{ url_for('home') }}" class="btn back-btn">← Back</a>
+
+
+    <!-- ✅ Logout -->
+    <a href="{{ url_for('admin_logout') }}" class="btn logout-btn">Logout</a>
+  </div>
+
+</body>
+</html>

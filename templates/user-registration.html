@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recycore | User Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* 🌌 Background gradient - same as login */
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    /* 🌟 Frosted glass card */
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 40px 35px;
+      width: 400px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffe1;
+      font-size: 26px;
+      margin-bottom: 25px;
+      letter-spacing: 0.8px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #e0f7fa;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      color: #003333;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+
+  select {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #003333;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  select:focus {
+    box-shadow: 0 0 10px #00ffe1;
+  }
+
+
+    input:focus {
+      box-shadow: 0 0 10px #00ffe1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      background: linear-gradient(90deg, #00ffe1, #00bcd4);
+      color: #003333;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      box-shadow: 0 0 20px #00ffff;
+      transform: scale(1.03);
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 18px;
+    }
+
+    .link a {
+      color: #00ffe1;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    /* ✅ Flash message styles */
+    .alert {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .alert-success {
+      background: rgba(0, 255, 0, 0.15);
+      color: #9eff9e;
+      border: 1px solid #00ff7f;
+    }
+
+    .alert-danger {
+      background: rgba(255, 0, 0, 0.15);
+      color: #ff9e9e;
+      border: 1px solid #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📝 User Registration</h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('register_user') }}" method="POST">
+      <label>Full Name</label>
+      <input type="text" name="name" required>
+
+      <label>Address</label>
+      <input type="text" name="address" required>
+
+      <label>Contact</label>
+      <input type="text" name="contact" required>
+
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label for="department">Department:</label>
+<select name="department" id="department" required>
+  <option value="">Select Department</option>
+  <option value="IT">IT</option>
+  <option value="CS">CS</option>
+  <option value="BMS">BMS</option>
+  <option value="BCOM">BCOM</option>
+  <option value="BBA">BBA</option>
+   <option value="BBI">BBI</option>
+    <option value="BAF">BAF</option>
+     <option value="BAMMC">BAMMC</option>
+      <option value="MLT">MLT</option>
+       <option value="VFX">VFX</option>
+        <option value="DSAI">DSAI</option>
+</select>
+
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <div class="link">
+      Already have an account? <a href="{{ url_for('user_login') }}">Login here</a>
+    </div>
+  </div>
+</body>
+</html>

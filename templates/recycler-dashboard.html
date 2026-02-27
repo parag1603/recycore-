@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recycler Dashboard | Recycore</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 40px;
+    }
+
+    .dashboard {
+      max-width: 700px;
+      margin: auto;
+      background-color: rgba(28, 28, 28, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #00d2ff;
+      letter-spacing: 1px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      padding: 15px;
+      background: #34495e;
+      color: white;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      font-weight: 500;
+    }
+
+    .menu a:hover {
+      background: #00b09b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>Welcome Recycler 👷‍♂️</h2>
+    <div class="menu">
+  <a href="{{ url_for('recycler_pickups') }}">📝 View Pickup Requests</a>
+ <a href="{{ url_for('recycler_profile') }}">👤 View Profile</a>
+
+  <a href="{{ url_for('recycler_logout') }}" style="background-color:#d32f2f;">🚪 Logout</a>
+</div>
+
+  </div>
+
+</body>
+</html>

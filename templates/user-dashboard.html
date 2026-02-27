@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard | Recycore</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .dashboard {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 45px 40px;
+      width: 380px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #00ffe1;
+      margin-bottom: 25px;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    .cc-hours, .pickup-date {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #e0f7fa;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+    }
+
+    .pickup-date strong {
+      color: #00ffe1;
+    }
+
+    /* ✅ Buttons styled like login page */
+    .btn {
+      display: block;
+      margin: 15px auto;
+      width: 80%;
+      background: linear-gradient(90deg, #00ffe1, #00bfa5);
+      color: #003333;
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #00ffe1;
+      background: linear-gradient(90deg, #00e6cc, #00bfa5);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,255,255,0.4) 10%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn:hover::before {
+      opacity: 1;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    /* Logout button (red tone but same glow) */
+    .logout-btn {
+      background: linear-gradient(90deg, #ff6666, #ff3d3d);
+      color: white;
+      box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+    }
+
+    .logout-btn:hover {
+      background: linear-gradient(90deg, #ff4d4d, #e60000);
+      box-shadow: 0 0 30px #ff6666;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+  <h2>Welcome, {{ user_name }} 👋</h2>
+
+  {% if pickup_date %}
+    <div class="pickup-date">
+      📅 Pickup Date: <strong>{{ pickup_date }}</strong>
+    </div>
+  {% else %}
+    <div class="pickup-date">
+      📅 Pickup Date: <strong>Not Scheduled Yet</strong>
+    </div>
+  {% endif %}
+
+  <a href="{{ url_for('pickup_request') }}" class="btn">📦 Submit Pickup Request</a>
+  <a href="{{ url_for('user_profile') }}" class="btn">📄 View Profile</a>
+  <a href="{{ url_for('user_logout') }}" class="btn logout-btn">🚪 Logout</a>
+</div>
+
+
+</body>
+</html>

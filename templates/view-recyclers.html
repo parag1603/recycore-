@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registered Recyclers</title>
+  <style>
+    body {
+      background-color: #0f2027;
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+    h2 { color: #00ffff; margin-top: 30px; }
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background: #1e3c46;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+    }
+    th, td { padding: 12px; text-align: center; }
+    th { background: #008b8b; color: #00ffff; }
+    tr:nth-child(even) { background: #243b40; }
+    tr:hover { background: #2e555f; }
+    .assign-form { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    input { padding: 6px; border-radius: 5px; border: none; width: 150px; }
+    .assign-btn {
+      background-color: #00b894; color: white; border: none; padding: 8px 12px;
+      border-radius: 6px; cursor: pointer; transition: 0.3s;
+    }
+    .assign-btn:hover { background-color: #019875; }
+    .delete-btn {
+      background-color: #e74c3c; color: white; border: none; padding: 8px 12px;
+      border-radius: 6px; cursor: pointer;
+    }
+    .delete-btn:hover { background-color: #c0392b; }
+    a { color: #00ffff; text-decoration: none; display: inline-block; margin-top: 20px; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h2>Assign Pickups to Recyclers</h2>
+
+  {% if pickup_requests %}
+  <table>
+    <tr>
+      <th>Request ID</th>
+      <th>User Name</th>
+      <th>Item Name</th>
+      <th>Quantity</th>
+      <th>Submission Date</th>
+      <th>Assign Recycler</th>
+    </tr>
+    {% for req in pickup_requests %}
+    <tr>
+      <td>{{ req.request_id }}</td>
+      <td>{{ req.user_name }}</td>
+      <td>{{ req.item_name }}</td>
+      <td>{{ req.quantity }}</td>
+      <td>{{ req.created_at }}</td>
+      <td>
+        <form action="{{ url_for('assign_recycler', request_id=req.request_id) }}" method="POST" class="assign-form">
+          <select name="recycler_id" required style="width: 140px; padding: 6px; border-radius: 5px; border: none;">
+            <option value="">-- Select Recycler --</option>
+            {% for recycler in recyclers %}
+            <option value="{{ recycler.id }}">{{ recycler.name }}</option>
+            {% endfor %}
+          </select>
+          
+          <input type="date" name="pickup_date" required>
+          
+          <button type="submit" class="assign-btn">Assign</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p style="text-align: center; color: #00ffff; margin-top: 30px;">No pending pickup requests.</p>
+  {% endif %}
+
+  <h2 style="margin-top: 50px;">Registered Recyclers</h2>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Contact</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+    {% for r in recyclers %}
+    <tr>
+      <td>{{ r.id }}</td>
+      <td>{{ r.name }}</td>
+      <td>{{ r.email }}</td>
+      <td>{{ r.contact }}</td>
+      <td>{{ r.location }}</td>
+      <td>
+        <form action="/delete-recycler/{{ r.id }}" method="POST"
+              onsubmit="return confirm('Delete this recycler?');" style="margin-top:5px;">
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href="/admin-panel">← Back to Admin Dashboard</a>
+</body>
+</html>
